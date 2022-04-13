@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Agregar Equipo
+{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'ingenieros/add-machine.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {% if message %}
+        <div class="message-div">
+        <h3 class="equipo-existente-error">{{message}}</h3>
+        </div>
+        {% endif %}
+
+        <form action="{% url "add_machine_page" %}" method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-control {% if form_field.errors %}invalid{% endif %}{% if field == form.slug %}slug-field{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+            <button class="btn btn-dark anadir-button">Añadir</button>
+        </form> 
+        <form action="{% url "my_machines_page" %}">
+            {% csrf_token %}
+            <button class="btn btn-dark volver-button">Volver</button>
+        </form>
+    <div>
+{% endblock content %}

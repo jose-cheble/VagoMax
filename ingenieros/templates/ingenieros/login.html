@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    <form class="form" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-control {% if form_field.errors %}invalid{% endif %}">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.error_messages }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-dark"type="submit" id="submit">Log In</button>
+    </form>
+    <div>
+        <form action="{% url "new_user_page" %}" method="POST">
+            {% csrf_token %}
+            <h3>Si no estas registrado, podes registrarte aqui:</h3>
+            <button class="btn btn-dark" type="submit" >Registrarse</button>
+        </form>
+    </div>
+{% endblock content %}

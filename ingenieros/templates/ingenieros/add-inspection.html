@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Agregar Inspeccion
+{% endblock title %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'ingenieros/add-inspection.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+<h1>Agregar inspeccion a: {{ machine.calle|title}} - E{{ machine.equipo_numero}}</h1>
+<div>
+    <h3> Atención: Automaticamente se guardara la fecha y hora del momento que se presione Añadir </h3>
+    <div class="container-fluid inspeccion-container">   
+        <form action="{% url "add_inspection_page" slug=machine.slug %}" method="POST">
+            {% csrf_token %}
+            {% for field in form  %}
+                <div class="form-control {% if form_field.errors %}invalid{% endif %}">
+                    {{ field.label_tag }} <br>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            <button class="btn btn-dark agregar-button" type="submit">Agregar Inspeccion</button>
+        </form>
+        <form action="{% url "detail_page" slug=machine.slug %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{ machine.slug }}" name="machine_slug"></input>
+                <button class="btn btn-dark volver-button">Volver a Equipo</button>
+        </form>
+    </div>
+<div>
+{% endblock content %}

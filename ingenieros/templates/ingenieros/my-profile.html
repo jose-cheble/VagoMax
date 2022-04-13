@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Mi Perfil
+{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'ingenieros/my-profile.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div>
+        <h3>Usuario: {{ request.user.username}}</h3>
+        <h3>Mail: {{ request.user.email}}</h3>
+    </div>
+    <div>
+        <h3>Cantidad de Equipos: {{ user_machines }}</h3>
+        <h3>Porcentaje del mes:</h3>
+    </div>
+    {% else %}
+    {% endif %}
+{% endblock content %}

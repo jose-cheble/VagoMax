@@ -1,0 +1,19 @@
+
+.image-div {
+    text-align: center;
+}
+
+.index-image {
+    height: 20rem;
+    margin-bottom: 1rem;
+}
+
+.index-text {
+    padding-top: 2rem;
+}
+
+.login-button {
+    margin-top: 2rem;
+    width: 12rem;
+    height: 4rem;
+}

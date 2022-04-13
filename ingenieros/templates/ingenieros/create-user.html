@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create User{% endblock title %}
+
+{% block content %}
+    <form class="form" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-control {% if form_field.errors %}invalid{% endif %}">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.error_messages }}
+        </div>
+        {% endfor %}
+        <button class="btn btn-dark" type="submit" id="submit">Crear Usuario</button>
+    </form>
+{% endblock content %}

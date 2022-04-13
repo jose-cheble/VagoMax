@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}VagoMax{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'ingenieros/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 image-div">
+                    <img class="index-image" src="{% static "ingenieros/images/index-image.png" %}">
+                </div>
+                <div class="col-lg-6 index-text">
+                    <h1> VagoMax </h1>
+                    <h2> Gestión y Control de maquinas de ascensor </h2>  
+                    {% if not request.user.is_authenticated %}
+                    <form action="{% url "login_page" %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark login-button">Log in</button>
+                    </form>
+                    {% else %}
+                    <form action="{% url "my_profile_page" %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark login-button">Mi Perfil</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        <div>
+    </section>
+{% endblock content %}

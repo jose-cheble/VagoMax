@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{machine.calle|title}}-E{{machine.equipo_numero}}
+{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'ingenieros/detail.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+<section class="datos-equipo">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 qr-div" >
+                <img class="qr-image" src="{{ machine.qr.url }}">
+            </div>
+            <div class="col-lg-8 col-md-8 nombre-equipo">
+                <h2>Edificio:</h2>
+                <h2> {{machine.nombre_edif|title}} </h2>
+                <h2>Equipo:</h2>
+                <h2> {{machine.calle|title}} - E{{machine.equipo_numero}}</h2>
+                <h3>Pagina Libro N°: {{machine.pagina_numero}}<h/3>
+                <h3>Prueba de seguridad: <h/3>
+                <h3>Ingeniero: {{ machine.ingeniero }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">   
+            <form action="{% url "detail_page" slug=machine.slug %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ machine.slug }}" name="machine_slug"></input>
+                <button class="btn btn-dark agregar-inspeccion-button" type="submit">Agregar Inspeccion</button>
+            </form>
+            <form action="{% url "my_machines_page" %}">
+                {% csrf_token %}
+                <button class="btn btn-dark volver-button">Volver a Mis Equipos</button>
+            </form>
+        </div>
+    </div>
+    <div class="inspecciones-list container-fluid">
+        <div class="row col-lg-4"> 
+            <h2>Inspecciones:</h2>
+            {% if inspections %}
+            {% for inspection in inspections %}
+                <div>
+                    <li>{{inspection.fecha}} - {{ inspection.observacion }}</li>
+                </div>
+            {% endfor %}
+            {% else %}
+            <div class="message-div">
+                <h3>No hay inspecciones aun</h3>
+            </div>
+            {% endif %}
+        </div>
+    <div>
+
+</section>
+{% endblock content %}
