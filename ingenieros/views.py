@@ -103,6 +103,7 @@ class AddinspectionView(View):
     def get(self, request, slug):
         machine = EquiposModel.objects.get(slug=slug)
         inspection_form = NuevaInspeccionForm()
+        inspection_form.set_initial(slug)
         return render(request, "ingenieros/add-inspection.html", {
             "machine": machine,
             "form": inspection_form,
@@ -111,13 +112,17 @@ class AddinspectionView(View):
     def post(self, request, slug):
         machine = EquiposModel.objects.get(slug=slug)
         inspection_form = NuevaInspeccionForm(request.POST)
-        if inspection_form.is_valid():
+        last_inspection = machine.inspections.last()
+        pagina = machine.pagina_numero
+        print(last_inspection, pagina)
+        if inspection_form.is_valid() and request.user.is_authenticated:
             machine.pagina_numero = request.POST["pagina"]
             machine.save()
             new_inspection = InspeccionesModel(
+                equipo = machine,
                 fecha = datetime.now(),
                 observacion = request.POST["observacion"],
-                equipo = machine,
+                pagina_numero = request.POST["pagina"]
             )
             new_inspection.save()
 
@@ -132,14 +137,21 @@ class AddinspectionView(View):
 
 class MyProfileView(View):
 
-
     
     def get(self, request):
-
         if request.user.is_authenticated:
-            number_user_machines = EquiposModel.objects.all().filter(ingeniero=request.user).count()
+            user_machines = EquiposModel.objects.all().filter(ingeniero=request.user)
+            number_user_machines = user_machines.count()
+            this_month_inspections = 0
+            for machine in user_machines:
+                if machine.inspections.last() != None:
+                    if machine.inspections.last().fecha.month == datetime.now().month:
+                        this_month_inspections += 1
+            this_month_perc = this_month_inspections / number_user_machines * 100
+                        
             return render(request, "ingenieros/my-profile.html", {
-                "user_machines" : number_user_machines
+                "user_machines" : number_user_machines,
+                "this_month_perc" : this_month_perc
             })
         else:
             return HttpResponseRedirect(reverse("login_page"))

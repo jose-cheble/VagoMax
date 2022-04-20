@@ -50,7 +50,7 @@ class EquiposModel(models.Model):
         # To autopopulate the slug field
         self.slug = slugify(self.calle + " E" + str(self.equipo_numero))
         # To create the QR code automatically
-        qrcode_image = qrcode.make( "http://127.0.0.1:8000/ingenieros/mis-equipos/"+str(self.slug))
+        qrcode_image = qrcode.make( getenv("URL_BASE_DIR")+"/ingenieros/mis-equipos/"+str(self.slug))
         canvas = Image.new("RGB", (qrcode_image.pixel_size, qrcode_image.pixel_size))
         canvas.paste(qrcode_image)
         fname = f"{self.slug}-qr"+'.png'
@@ -65,9 +65,11 @@ class EquiposModel(models.Model):
 
 
 class InspeccionesModel(models.Model):
+    equipo = models.ForeignKey(EquiposModel, on_delete=models.CASCADE, related_name="inspections")
     fecha = models.DateTimeField(default=datetime.now)
     observacion = models.TextField()
-    equipo = models.ForeignKey(EquiposModel, on_delete=models.CASCADE, related_name="inspections")
+    pagina_numero = models.IntegerField(default=11, null=False)
+
 
 
 # class PruebasDeSeguridadModel(models.Model):

@@ -1,24 +1,36 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}
+Login
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'ingenieros/login.css' %}">
+{% endblock %}
+
 
 {% block content %}
-    <form class="form" method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-control {% if form_field.errors %}invalid{% endif %}">
-            {{ field.label_tag }}
-            {{ field }}
-            {{ field.error_messages }}
-        </div>
-        {% endfor %}
-        <button class="btn btn-dark"type="submit" id="submit">Log In</button>
-    </form>
-    <div>
-        <form action="{% url "new_user_page" %}" method="POST">
+<div class="container-fluid"
+    <div class="row">
+        <form class="form" method="POST">
             {% csrf_token %}
-            <h3>Si no estas registrado, podes registrarte aqui:</h3>
-            <button class="btn btn-dark" type="submit" >Registrarse</button>
+            {% for field in form %}
+            <div class="form-control {% if form_field.errors %}invalid{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.error_messages }}
+            </div>
+            {% endfor %}
+            <button class="btn btn-dark login-button" type="submit" id="submit">Log In</button>
         </form>
+        <div>
+            <form action="{% url "new_user_page" %}" method="POST">
+                {% csrf_token %}
+                <h5>Si no estas registrado, podes registrarte aqui:</h5>
+                <button class="btn btn-dark register-button" type="submit" >Registrarse</button>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock content %}

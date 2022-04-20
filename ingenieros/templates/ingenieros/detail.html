@@ -18,12 +18,12 @@
             </div>
             <div class="col-lg-8 col-md-8 nombre-equipo">
                 <h2>Edificio:</h2>
-                <h2> {{machine.nombre_edif|title}} </h2>
+                <h3> {{machine.nombre_edif|title}} </h3>
                 <h2>Equipo:</h2>
-                <h2> {{machine.calle|title}} - E{{machine.equipo_numero}}</h2>
-                <h3>Pagina Libro N°: {{machine.pagina_numero}}<h/3>
-                <h3>Prueba de seguridad: <h/3>
-                <h3>Ingeniero: {{ machine.ingeniero }}</h3>
+                <h3> {{machine.calle|title}} - E{{machine.equipo_numero}}</h3>
+                <h4>Pagina Libro N°: {{machine.pagina_numero}}</h4>
+                <h4>Prueba de seguridad: </h4>
+                <h4>Ingeniero: {{ machine.ingeniero }}</h4>
             </div>
         </div>
     </div>
@@ -41,12 +41,12 @@
         </div>
     </div>
     <div class="inspecciones-list container-fluid">
-        <div class="row col-lg-4"> 
-            <h2>Inspecciones:</h2>
+        <div> 
+            <h3>Inspecciones:</h3>
             {% if inspections %}
             {% for inspection in inspections %}
                 <div>
-                    <li>{{inspection.fecha}} - {{ inspection.observacion }}</li>
+                    <li>{{inspection.fecha|date:'Y/m/d' }} - Pag. N°: {{inspection.pagina_numero}}:   {{ inspection.observacion }}</li>
                 </div>
             {% endfor %}
             {% else %}

@@ -22,10 +22,13 @@ Agregar Equipo
             {% csrf_token %}
 
             {% for field in form %}
-            <div class="form-control {% if form_field.errors %}invalid{% endif %}{% if field == form.slug %}slug-field{% endif %}">
-                {{ field.label_tag }}
-                {{ field }}
-                {{ field.errors }}
+            <div class="form-group ">
+                <div class="form-control {% if form_field.errors %}invalid{% endif %}
+                    {% if field == form.slug %}slug-field{% endif %} ">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
             </div>
             {% endfor %}
             <button class="btn btn-dark anadir-button">Añadir</button>

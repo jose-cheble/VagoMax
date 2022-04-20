@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
+{% load static  %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}
+Log out
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'ingenieros/logout.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h1>Te has deslogueado</h2>
-    <form action="{% url "login_page" %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-dark login-button">Log in</button>
-    </form>
-    <form action="{% url "index_page" %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-dark login-button">Pagina Principal</button>
-    </form>
+<div class="container-fluid logout-info">
+    <div class="row">
+        <h1>Te has deslogueado con exito</h2>
+        <form action="{% url "login_page" %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark login-button">Log in</button>
+        </form>
+        <form action="{% url "index_page" %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark index-button">Pagina Principal</button>
+        </form>
+    </div>
+</div>
 {% endblock content %}

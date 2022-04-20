@@ -10,11 +10,13 @@
 
 {% block content %}
     <div class="listado-equipos container-fluid">
-    <ul class="equipos">
+    <ul class="machines">
         {% for machine in all_machines %}
+        <div class="row machine">
             <li>
                 <a href="{% url "detail_page" slug=machine.slug %}">{{machine.calle|upper}} - E{{machine.equipo_numero}}</a>
             <li>
+        </div>
         {% endfor %}
     </ul>
     <form action="{% url "add_machine_page" %}" method"GET">
